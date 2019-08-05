@@ -30,19 +30,6 @@ def binary_search(sequence, num):
     return None
 
 
-def binarysearch(sequence, value):
-    lo, hi = 0, len(sequence) - 1
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        if sequence[mid] < value:
-            lo = mid + 1
-        elif value < sequence[mid]:
-            hi = mid - 1
-        else:
-            return mid
-    return None
-
 
 sorted_seq = quicksort([3, 2, 5, 33, 77, 3, 1, 99])
 print(binary_search(sorted_seq, 2))
-print(binarysearch(sorted_seq, 2))
