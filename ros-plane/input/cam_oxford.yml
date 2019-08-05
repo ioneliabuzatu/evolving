@@ -1,0 +1,13 @@
+# YAML:1.0
+Camera:
+ centerX: 600 # 254.903519
+ centerY: 800 # 201.899490
+ focal  : 389.956085  #Focal length in horizontal pixels
+ px_width : 1.0
+ px_height: 1.0
+
+Stereo:
+ baseline:    0.120005    #Base line in meters
+ translation: 1.078
+ rotation :   0.25
+

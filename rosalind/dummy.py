@@ -76,9 +76,9 @@ def file_hammington():
     return seq1_2
 
 
-seq12 = file_hammington()
-hammington_seq1 = seq12[0]
-hammington_seq2 = seq12[1]
+# seq12 = file_hammington()
+# hammington_seq1 = seq12[0]
+# hammington_seq2 = seq12[1]
 
 
 # print(hammington(hammington_seq1, hammington_seq2))
@@ -94,5 +94,20 @@ def mendel(k, m, n):
     return total_probability
 
 
-print(mendel(2, 2, 2))
-print(mendel(23, 24, 30))
+# print(mendel(2, 2, 2))
+# print(mendel(23, 24, 30))
+
+def permutation(k):
+    from itertools import permutations
+    # Print the obtained permutations
+    perm = permutations([i for i in range(1,k+1)])
+    print(perm)
+    tot = 0
+    for i in list(perm):
+        print(*i)
+        tot += 1
+    return tot
+
+
+tot = permutation(5)
+print(tot)

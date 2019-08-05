@@ -1,36 +1,35 @@
-def computeH(pattern):
-    m = len(pattern)
-    H = {1: 0, 2: 1}
-    for i in range(2, m):
-        j = H[i]
-        bi = pattern[i - 1]
-        bj = pattern[j - 1]
-        while j > 0 and bi != bj:
-            j = H[j]
-        H[i + 1] = j + 1
-    return H
+from numpy import zeros
+from readparse_FASTA import ReadFASTA
 
 
-def kmp(text, pattern):
-    i = j = 1
-    H = computeH(pattern)
-    n = len(text)
-    m = len(pattern)
-    while i <= m and j <= n:
-        while i > 0 and pattern[i - 1] != text[j - 1]:
-            i = H[i]
-        i += 1
-        j += 1
-    if i > m:
-        return j - (m + 1)
-    else:
-        return None
+# Data is in FASTA form
+# dna_list = ReadFASTA('data/rosalind_cons.txt')
+dna_list = ReadFASTA('../conses.txt')
 
+# Setup an array and count into the array
+M = zeros((4, len(dna_list[0][1])), dtype=int)
+snp_dict = {'A': 0, 'C': 1, 'G': 2, 'T': 3}
+for dna in dna_list:
+    for index, snp in enumerate(dna[1]):
+        M[snp_dict[snp]][index] += 1
 
-def printH(H):
-    for i in range(1, len(H) + 1):
-        print(H[i], end=' ')
+# Determine the consensus string
+consensus = ''
+to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T'}
+for i in range(0, len(dna_list[0][1])):
+    maxval = [-1, -1]
+    for j in range(0, 4):
+        if maxval[1] < M[j][i]:
+            maxval = [j, M[j][i]]
+    consensus += to_snp[maxval[0]]
 
+# Format the count properly
+consensus = [consensus, 'A:', 'C:', 'G:', 'T:']
+for index, col in enumerate(M):
+    for val in col:
+        consensus[index + 1] += ' ' + str(val)
 
-print(kmp('xxabcdabd', 'abcdabd'))
-printH(computeH('abcdabd'))
+# Print and write the output
+print('\n'.join(consensus))
+with open('010_CONS.txt', 'w') as output_data:
+    output_data.write('\n'.join(consensus))
